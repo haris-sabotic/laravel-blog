@@ -15,25 +15,27 @@
                             on {{ date('m d, y', strtotime($post->published_at)) }}
                         </p>
 
-                        <div class="del-buttons">
-                            @if ($post->user_id == auth()->user()->id || auth()->user()->is_admin)
-                                <form action="{{ route('del_post.perform', $post->id) }}" class="del-post"
-                                    method="POST">
-                                    @csrf
+                        @if (Auth::check())
+                            <div class="del-buttons">
+                                @if ($post->user_id == auth()->user()->id || auth()->user()->is_admin)
+                                    <form action="{{ route('del_post.perform', $post->id) }}" class="del-post"
+                                        method="POST">
+                                        @csrf
 
-                                    <button>DELETE</button>
-                                </form>
-                            @endif
+                                        <button>DELETE</button>
+                                    </form>
+                                @endif
 
-                            @if (auth()->user()->is_admin && $post->user_id != auth()->user()->id)
-                                <form action="{{ route('del_post_user.perform', $post->id) }}" class="del-user"
-                                    method="POST">
-                                    @csrf
+                                @if (auth()->user()->is_admin && $post->user_id != auth()->user()->id)
+                                    <form action="{{ route('del_post_user.perform', $post->id) }}" class="del-user"
+                                        method="POST">
+                                        @csrf
 
-                                    <button>DELETE USER</button>
-                                </form>
-                            @endif
-                        </div>
+                                        <button>DELETE USER</button>
+                                    </form>
+                                @endif
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Divider-->
